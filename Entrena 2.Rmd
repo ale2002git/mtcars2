@@ -1,0 +1,95 @@
+---
+title: "mtcars"
+author: "Alejandra"
+date: "23/12/2024"
+output: 
+  html_document:
+    toc: TRUE
+    toc_depth: 1
+    number_sections: TRUE
+    toc_float: TRUE
+    theme: journal
+    css: customizacion.css
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(message = FALSE)
+library(dplyr)
+library(tidyr)
+library(lubridate)
+library(readr)
+library(DT)
+library(kableExtra)
+library(DT)
+library(tidyr)
+library(ggplot2)
+
+data(mtcars)
+```
+
+## Introducción
+
+Este informe tiene como objetivo:
+* realizar un análisis exploratorio del conjunto de datos **mtcars**.  
+* identificar tendencias clave y evaluar la relación entre diferentes variables.
+
+## Carga y Preparación de Datos
+
+Este dataset contiene información sobre diferentes atributos de automóviles.
+
+```{r import_data}
+data(mtcars)
+datos <- mtcars %>% as_tibble()
+kable(head(datos), caption = "Primeras Filas del Dataset")
+```
+
+## Análisis de Datos
+
+### Resumen Estadístico
+Para entender las características principales de las variables.
+
+```{r summary_data}
+kable(summary(datos), caption = "Resumen Estadístico del Dataset")
+```
+
+### Tabla Interactiva
+Para explorar los datos de manera dinámica.
+
+```{r interactive_table}
+datatable(datos, caption = "Tabla Interactiva del Dataset")
+```
+
+### Visualización de Datos
+#### Gráfico de Dispersión
+Para analizar la relación entre el peso (`wt`) y el consumo de combustible (`mpg`).
+
+```{r scatter_plot}
+ggplot(datos, aes(x = wt, y = mpg)) +
+  geom_point(color = "blue", size = 3) +
+  labs(
+    title = "Relación entre Peso y Consumo de Combustible",
+    x = "Peso (1000 lbs)",
+    y = "Millas por Galón (mpg)"
+  ) +
+  theme_minimal()
+```
+
+#### Histograma
+Histograma de la variable `hp` (caballos de fuerza) para analizar su distribución.
+
+```{r histogram}
+ggplot(datos, aes(x = hp)) +
+  geom_histogram(binwidth = 20, fill = "darkgreen", color = "black") +
+  labs(
+    title = "Distribución de Caballos de Fuerza",
+    x = "Caballos de Fuerza",
+    y = "Frecuencia"
+  ) +
+  theme_minimal()
+```
+
+## Conclusiones
+
+En este informe hemos explorado el dataset `mtcars`, identificando una relación inversa entre el peso del vehículo y el consumo de combustible y una distribución de caballos de fuerza con un rango amplio, pero concentrada en valores medios.
+
+---
